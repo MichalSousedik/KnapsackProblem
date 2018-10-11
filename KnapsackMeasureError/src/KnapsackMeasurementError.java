@@ -8,33 +8,36 @@ public class KnapsackMeasurementError {
 
 //        args[0] -- my solution file
 //        args[1] -- correct solution file
+//        args[2] -- average, max
     public static void main(String[] args) throws IOException {
 
         if (args.length > 1) {
             String solutionFile = args[0];
             String correctSolutionFile = args[1];
+            String type = args[2];
             List<Integer> approxValues = readSolutionFile(solutionFile);
             List<Integer> correctValues = readSolutionFile(correctSolutionFile);
             List<Double> measureErrors = measureSolutionErrors(approxValues, correctValues);
             Optional<Double> max = measureErrors.stream().max(Double::compareTo);
-            if(max.isPresent()){
+            if(max.isPresent() && type.equals("max")){
                 writeToFile("max", max.get(), solutionFile);
             }
             OptionalDouble average = measureErrors.stream()
                     .mapToDouble(a -> a)
                     .average();
-            if(average.isPresent()){
+            if(average.isPresent() && type.equals("average")){
                 writeToFile("average", average.getAsDouble(), solutionFile);
             }
         }
     }
 
     private static void writeToFile(String type, Double value, String solutionFile) throws IOException {
-        String time = String.format ("%f", value);
+        value*=100;
+        String time = String.format ("%.4f", value);
         FileWriter fw = new FileWriter("data/error/measureError.txt", true);
         BufferedWriter bw = new BufferedWriter(fw);
         bw.newLine();
-        bw.write(solutionFile + " -- " + type + ": " + value);
+        bw.write(time + "%");
         bw.close();
     }
 

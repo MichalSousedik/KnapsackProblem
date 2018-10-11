@@ -14,7 +14,7 @@ public class KnapsackProblem {
     private static final int ITEMS_COUNT = 1;
     private static final int MAX_WEIGHT = 2;
 
-    //        args[0] -- fileName
+//        args[0] -- fileName
 //        args[1] -- algorithm
 //        args[2] -- count time
 //        args[3] -- number of iteration for counting time
@@ -48,8 +48,14 @@ public class KnapsackProblem {
                 case "explicit":
                     printSolution(KnapsackProblemSolver.findSolutionExplicitly(knapsack).toString(), countTime);
                     break;
-                case "heuristic":
-                    printSolution(KnapsackProblemSolver.findSolutionHeuristic(knapsack).toString(), countTime);
+                case "heuristic_ratio":
+                    printSolution(KnapsackProblemSolver.findSolutionHeuristicRatio(knapsack).toString(), countTime);
+                    break;
+                case "heuristic_value":
+                    printSolution(KnapsackProblemSolver.findSolutionHeuristicValue(knapsack).toString(), countTime);
+                    break;
+                case "heuristic_weight":
+                    printSolution(KnapsackProblemSolver.findSolutionHeuristicWeight(knapsack).toString(), countTime);
                     break;
             }
         }

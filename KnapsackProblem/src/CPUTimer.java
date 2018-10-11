@@ -35,11 +35,11 @@ class CPUTimer {
     }
 
     void writeAverageTime(String fileName, String algorithm) throws IOException {
-        String time = String.format ("%f", getAverageTime());
+        String time = String.format ("%.5f", getAverageTime());
         FileWriter fw = new FileWriter("data/time/averageTimes.txt", true);
         BufferedWriter bw = new BufferedWriter(fw);
         bw.newLine();
-        bw.write(fileName + " " + algorithm + " average time: " + time + "s.");
+        bw.write(time);
         bw.close();
     }
 

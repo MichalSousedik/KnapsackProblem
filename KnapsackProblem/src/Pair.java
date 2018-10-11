@@ -1,10 +1,10 @@
 public class Pair {
     private int pos;
-    private double frac;
+    private double value;
 
-    public Pair(int pos, double frac) {
+    public Pair(int pos, double value) {
         this.pos = pos;
-        this.frac = frac;
+        this.value = value;
     }
 
     public int getPos() {
@@ -15,11 +15,11 @@ public class Pair {
         this.pos = pos;
     }
 
-    public double getFrac() {
-        return frac;
+    public double getValue() {
+        return value;
     }
 
-    public void setFrac(double frac) {
-        this.frac = frac;
+    public void setValue(double value) {
+        this.value = value;
     }
 }

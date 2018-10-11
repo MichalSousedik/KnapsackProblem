@@ -32,13 +32,35 @@ class KnapsackProblemSolver {
         return new KnapsackProblemSolution(knapsack, maxValue, best);
     }
 
-    static KnapsackProblemSolution findSolutionHeuristic(Knapsack knapsack) {
+    static KnapsackProblemSolution findSolutionHeuristicRatio(Knapsack knapsack) {
         List<Pair> pairs = new ArrayList<>();
         int i = 0;
         for (Item item : knapsack.getItems()) {
             pairs.add(new Pair(i++, (double) item.getValue() / item.getWeight()));
         }
-        pairs.sort(Comparator.comparingDouble(Pair::getFrac).reversed());
+        return findSolutionHeuristic(knapsack, pairs, Comparator.comparingDouble(Pair::getValue).reversed());
+    }
+
+    static KnapsackProblemSolution findSolutionHeuristicValue(Knapsack knapsack) {
+        List<Pair> pairs = new ArrayList<>();
+        int i = 0;
+        for (Item item : knapsack.getItems()) {
+            pairs.add(new Pair(i++, item.getValue()));
+        }
+        return findSolutionHeuristic(knapsack, pairs, Comparator.comparingDouble(Pair::getValue).reversed());
+    }
+
+    static KnapsackProblemSolution findSolutionHeuristicWeight(Knapsack knapsack) {
+        List<Pair> pairs = new ArrayList<>();
+        int i = 0;
+        for (Item item : knapsack.getItems()) {
+            pairs.add(new Pair(i++, item.getWeight()));
+        }
+        return findSolutionHeuristic(knapsack, pairs, Comparator.comparingDouble(Pair::getValue));
+    }
+
+    private static KnapsackProblemSolution findSolutionHeuristic(Knapsack knapsack, List<Pair> pairs, Comparator<Pair> reversed) {
+        pairs.sort(reversed);
         int maxValue = 0;
         int currentWeight = 0;
         int[] best = new int[knapsack.getItems().size()];
@@ -53,4 +75,5 @@ class KnapsackProblemSolver {
         }
         return new KnapsackProblemSolution(knapsack, maxValue, best);
     }
+
 }
