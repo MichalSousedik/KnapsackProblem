@@ -22,4 +22,12 @@ public class KnapsackProblemSolution {
         }
         return s.toString();
     }
+
+    public int getMaxValue() {
+        return maxValue;
+    }
+
+    public int[] getBestCombination() {
+        return bestCombination;
+    }
 }

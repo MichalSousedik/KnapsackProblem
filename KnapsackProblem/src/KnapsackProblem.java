@@ -22,9 +22,16 @@ public class KnapsackProblem {
         if (args.length > 3) {
             String fileName = args[0];
             String algorithm = args[1];
-
             Boolean countTime = Boolean.parseBoolean(args[2]);
             int numberOfIterations = Integer.parseInt(args[3]);
+
+//            String fileName = "knap_20.inst.dat";
+//            String algorithm = "dynamic_value";
+//            Boolean countTime = false;
+//            int numberOfIterations = 1;
+
+
+
             if (fileName != null) {
                 List<Knapsack> knapsacks = readFile(fileName);
                 if (countTime) {
@@ -44,22 +51,10 @@ public class KnapsackProblem {
 
     private static void startAlgorithm(List<Knapsack> knapsacks, String algorithm, Boolean countTime){
         for (Knapsack knapsack : knapsacks) {
-            switch (algorithm) {
-                case "explicit":
-                    printSolution(KnapsackProblemSolver.findSolutionExplicitly(knapsack).toString(), countTime);
-                    break;
-                case "heuristic_ratio":
-                    printSolution(KnapsackProblemSolver.findSolutionHeuristicRatio(knapsack).toString(), countTime);
-                    break;
-                case "heuristic_value":
-                    printSolution(KnapsackProblemSolver.findSolutionHeuristicValue(knapsack).toString(), countTime);
-                    break;
-                case "heuristic_weight":
-                    printSolution(KnapsackProblemSolver.findSolutionHeuristicWeight(knapsack).toString(), countTime);
-                    break;
-            }
+            printSolution(KnapsackProblemSolverFactory.getSolver(algorithm).solve(knapsack).toString(), countTime);
         }
     }
+
 
     private static void printSolution(String solution, Boolean countTime) {
         if (!countTime)
