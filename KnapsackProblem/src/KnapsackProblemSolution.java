@@ -23,11 +23,12 @@ public class KnapsackProblemSolution {
         return s.toString();
     }
 
-    public int getMaxValue() {
+    int getMaxValue() {
         return maxValue;
     }
 
-    public int[] getBestCombination() {
-        return bestCombination;
+    void setMaxValue(int maxValue) {
+        this.maxValue = maxValue;
     }
+
 }

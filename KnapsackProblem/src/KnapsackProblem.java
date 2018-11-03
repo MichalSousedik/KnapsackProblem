@@ -3,9 +3,7 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 import java.util.stream.Stream;
 
 public class KnapsackProblem {
@@ -24,11 +22,15 @@ public class KnapsackProblem {
             String algorithm = args[1];
             Boolean countTime = Boolean.parseBoolean(args[2]);
             int numberOfIterations = Integer.parseInt(args[3]);
+            String parameter = "";
+            if(args.length > 4)
+                parameter = args[4];
 
-//            String fileName = "knap_20.inst.dat";
-//            String algorithm = "dynamic_value";
+//            String fileName = "knap_4.inst.dat";
+//            String algorithm = "fptas";
 //            Boolean countTime = false;
 //            int numberOfIterations = 1;
+//            String parameter = "0";
 
 
 
@@ -38,20 +40,20 @@ public class KnapsackProblem {
                     CPUTimer cpuTimer = new CPUTimer();
                     for (int i = 0; i < numberOfIterations; i++) {
                         cpuTimer.start();
-                        startAlgorithm(knapsacks, algorithm, countTime);
+                        startAlgorithm(knapsacks, algorithm, countTime, parameter);
                         cpuTimer.stop();
                     }
-                    cpuTimer.writeAverageTime(fileName, algorithm);
+                    cpuTimer.writeAverageTime();
                 }
                 else
-                    startAlgorithm(knapsacks, algorithm, countTime);
+                    startAlgorithm(knapsacks, algorithm, countTime, parameter);
             }
         }
     }
 
-    private static void startAlgorithm(List<Knapsack> knapsacks, String algorithm, Boolean countTime){
+    private static void startAlgorithm(List<Knapsack> knapsacks, String algorithm, Boolean countTime, String parameter){
         for (Knapsack knapsack : knapsacks) {
-            printSolution(KnapsackProblemSolverFactory.getSolver(algorithm).solve(knapsack).toString(), countTime);
+            printSolution(KnapsackProblemSolverFactory.getSolver(algorithm, parameter).solve(knapsack).toString(), countTime);
         }
     }
 

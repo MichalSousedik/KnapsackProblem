@@ -34,7 +34,7 @@ class CPUTimer {
         return Double.NaN;
     }
 
-    void writeAverageTime(String fileName, String algorithm) throws IOException {
+    void writeAverageTime() throws IOException {
         String time = String.format ("%.5f", getAverageTime());
         FileWriter fw = new FileWriter("data/time/averageTimes.txt", true);
         BufferedWriter bw = new BufferedWriter(fw);

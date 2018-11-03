@@ -1,10 +1,9 @@
 public class KnapsackProblemSolverDynamic implements KnapsackProblemSolver {
 
-    protected KnapsackCell[][] table;
-    protected String algorithm;
-    protected int itemsNumber;
+    private KnapsackCell[][] table;
+    private String algorithm;
 
-    protected class KnapsackCell {
+    class KnapsackCell {
         int interest;
         int[] itemSelection;
 
@@ -12,6 +11,9 @@ public class KnapsackProblemSolverDynamic implements KnapsackProblemSolver {
             this.interest = interest;
             this.itemSelection = itemSelection;
         }
+    }
+
+    KnapsackProblemSolverDynamic() {
     }
 
     KnapsackProblemSolverDynamic(String algorithm) {
@@ -24,11 +26,10 @@ public class KnapsackProblemSolverDynamic implements KnapsackProblemSolver {
 
     @Override
     public KnapsackProblemSolution solve(Knapsack knapsack) {
-        this.itemsNumber = knapsack.getItems().size();
 
         switch (this.algorithm) {
             case "dynamic_value":
-                return solveValuesBottomTop(knapsack, getItemsTotalValue(knapsack));
+                return solveValuesBottomTop(knapsack);
             case "dynamic_weight":
                 return solveWeightsBottomTop(knapsack);
             default:
@@ -37,6 +38,8 @@ public class KnapsackProblemSolverDynamic implements KnapsackProblemSolver {
     }
 
     private KnapsackProblemSolution solveWeightsBottomTop(Knapsack knapsack) {
+
+        int itemsNumber = knapsack.getItems().size();
 
         int maxWeight = knapsack.getMaxWeight();
 
@@ -75,7 +78,10 @@ public class KnapsackProblemSolverDynamic implements KnapsackProblemSolver {
     }
 
 
-    private KnapsackProblemSolution solveValuesBottomTop(Knapsack knapsack, int totalValue) {
+    KnapsackProblemSolution solveValuesBottomTop(Knapsack knapsack) {
+
+        int totalValue = getItemsTotalValue(knapsack);
+        int itemsNumber = knapsack.getItems().size();
 
         this.table = new KnapsackCell[totalValue + 1][knapsack.getItems().size() + 1];
         for (int value = 0; value <= totalValue; ++value) {
@@ -115,6 +121,7 @@ public class KnapsackProblemSolverDynamic implements KnapsackProblemSolver {
                             table[value][itemNumber] = new KnapsackCell(previousCell.interest, previousCell.itemSelection.clone());
                         } else {
                             int[] selection = table[indexOfRowWithoutItemValue][itemNumber - 1].itemSelection.clone();
+                            selection[itemNumber-1] = 1;
                             table[value][itemNumber] = new KnapsackCell(cellWithoutItemValue.interest + selectedItem.getWeight(), selection);
                         }
                     }
@@ -122,10 +129,10 @@ public class KnapsackProblemSolverDynamic implements KnapsackProblemSolver {
             }
         }
 
-        return getSolutionValue(knapsack, totalValue);
+        return getSolutionValue(knapsack, totalValue, itemsNumber);
     }
 
-    private KnapsackProblemSolution getSolutionValue(Knapsack knapsack, int rowCount) {
+    private KnapsackProblemSolution getSolutionValue(Knapsack knapsack, int rowCount, int itemsNumber) {
         for (int row = rowCount; row >= 0; row--) {
             if (table[row][itemsNumber].interest <= knapsack.getMaxWeight()) {
                 return new KnapsackProblemSolution(knapsack, row, table[row][itemsNumber].itemSelection);

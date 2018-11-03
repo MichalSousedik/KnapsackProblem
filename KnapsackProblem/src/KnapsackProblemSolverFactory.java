@@ -2,7 +2,7 @@ import com.sun.istack.internal.NotNull;
 
 class KnapsackProblemSolverFactory {
     @NotNull
-    static KnapsackProblemSolver getSolver(String algorithm) {
+    static KnapsackProblemSolver getSolver(String algorithm, String parameter) {
         switch (algorithm) {
             case "explicit":
                 return new KnapsackProblemSolverExplicit();
@@ -18,6 +18,8 @@ class KnapsackProblemSolverFactory {
                 return new KnapsackProblemSolverDynamic(algorithm);
             case "dynamic_weight":
                 return new KnapsackProblemSolverDynamic(algorithm);
+            case "fptas":
+                return new KnapsackProblemSolverFPTAS(parameter);
             default:
                 return new KnapsackProblemSolverExplicit();
         }
