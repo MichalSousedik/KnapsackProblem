@@ -1,6 +1,6 @@
 # KnapsackProblem
 
-Solving Knapsack problem using methods like:
+Solving Knapsack problem using different methods:
   - Explicit
   - Branch & Bound 
   - Heuristics
