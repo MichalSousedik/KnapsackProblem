@@ -5,4 +5,4 @@ Solving Knapsack problem using methods like:
   - Branch & Bound 
   - Heuristics
   - Dynamic programming (Decomposition by price and weight)
-  - Iterative programming (Genetic programming)
+  - Iterative (Genetic programming)
