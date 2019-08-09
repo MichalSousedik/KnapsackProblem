@@ -1,8 +1,10 @@
 import com.sun.istack.internal.NotNull;
 
+import java.util.Map;
+
 class KnapsackProblemSolverFactory {
     @NotNull
-    static KnapsackProblemSolver getSolver(String algorithm, String parameter) {
+    static KnapsackProblemSolver getSolver(String algorithm, Map<String, String> parameters) {
         switch (algorithm) {
             case "explicit":
                 return new KnapsackProblemSolverExplicit();
@@ -18,8 +20,10 @@ class KnapsackProblemSolverFactory {
                 return new KnapsackProblemSolverDynamic(algorithm);
             case "dynamic_weight":
                 return new KnapsackProblemSolverDynamic(algorithm);
-            case "fptas":
-                return new KnapsackProblemSolverFPTAS(parameter);
+            case Constant.FPTAS:
+                return new KnapsackProblemSolverFPTAS(parameters);
+            case Constant.GA:
+                return new KnapsackProblemSolverGA(parameters);
             default:
                 return new KnapsackProblemSolverExplicit();
         }

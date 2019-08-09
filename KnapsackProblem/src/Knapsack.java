@@ -1,26 +1,26 @@
 import java.util.List;
 
-class Knapsack {
+public class Knapsack {
 
     private int id;
     private int maxWeight;
     private List<Item> items;
 
-    Knapsack(int id, int maxWeight, List<Item> items) {
+    public Knapsack(int id, int maxWeight, List<Item> items) {
         this.id = id;
         this.maxWeight = maxWeight;
         this.items = items;
     }
 
-    List<Item> getItems() {
+    public List<Item> getItems() {
         return items;
     }
 
-    int getId() {
+    public int getId() {
         return id;
     }
 
-    int getMaxWeight() {
+    public int getMaxWeight() {
         return maxWeight;
     }
 

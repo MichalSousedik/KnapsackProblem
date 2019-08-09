@@ -22,15 +22,11 @@ public class KnapsackProblem {
             String algorithm = args[1];
             Boolean countTime = Boolean.parseBoolean(args[2]);
             int numberOfIterations = Integer.parseInt(args[3]);
-            String parameter = "";
-            if(args.length > 4)
-                parameter = args[4];
 
-//            String fileName = "knap_4.inst.dat";
-//            String algorithm = "fptas";
+//            String fileName = "knap_40.inst.dat";
+//            String algorithm = "ga";
 //            Boolean countTime = false;
 //            int numberOfIterations = 1;
-//            String parameter = "0";
 
 
 
@@ -40,26 +36,49 @@ public class KnapsackProblem {
                     CPUTimer cpuTimer = new CPUTimer();
                     for (int i = 0; i < numberOfIterations; i++) {
                         cpuTimer.start();
-                        startAlgorithm(knapsacks, algorithm, countTime, parameter);
+                        startAlgorithm(knapsacks, algorithm, countTime, createParameters(args));
                         cpuTimer.stop();
                     }
                     cpuTimer.writeAverageTime();
                 }
                 else
-                    startAlgorithm(knapsacks, algorithm, countTime, parameter);
+                    startAlgorithm(knapsacks, algorithm, countTime, createParameters(args));
             }
         }
     }
 
-    private static void startAlgorithm(List<Knapsack> knapsacks, String algorithm, Boolean countTime, String parameter){
+    private static Map<String, String> createParameters(String[] args){
+        Map<String, String> parameters = new HashMap<>();
+        if(args.length > 4 && args[1].equals(Constant.EPSILON)){
+            parameters.put(Constant.EPSILON, args[4]);
+        }
+        else if(args.length > 9 && args[1].equals(Constant.GA)){
+            parameters.put(Constant.GENERATIONS, args[4]);
+            parameters.put(Constant.POPULATION, args[5]);
+            parameters.put(Constant.TOURNAMENT_SIZE, args[6]);
+            parameters.put(Constant.CROSSOVER_PROBABILITY, args[7]);
+            parameters.put(Constant.MUTATION_RATE, args[8]);
+            parameters.put(Constant.ELITISM, args[9]);
+
+//        parameters.put(Constant.GENERATIONS, "100");
+//        parameters.put(Constant.POPULATION, "3");
+//        parameters.put(Constant.TOURNAMENT_SIZE, "10");
+//        parameters.put(Constant.CROSSOVER_PROBABILITY, "0.8");
+//        parameters.put(Constant.MUTATION_RATE, "0.1");
+//        parameters.put(Constant.ELITISM, "2");
+        }
+        return parameters;
+    }
+
+    private static void startAlgorithm(List<Knapsack> knapsacks, String algorithm, Boolean countTime, Map<String, String> parameters){
         for (Knapsack knapsack : knapsacks) {
-            printSolution(KnapsackProblemSolverFactory.getSolver(algorithm, parameter).solve(knapsack).toString(), countTime);
+            printSolution(KnapsackProblemSolverFactory.getSolver(algorithm, parameters).solve(knapsack).toString(), countTime);
         }
     }
 
 
     private static void printSolution(String solution, Boolean countTime) {
-        if (!countTime)
+//        if (!countTime)
             System.out.print(solution);
     }
 

@@ -1,4 +1,5 @@
 import java.util.Comparator;
+import java.util.Map;
 
 public class KnapsackProblemSolverFPTAS extends KnapsackProblemSolverDynamic implements KnapsackProblemSolver {
 
@@ -7,8 +8,8 @@ public class KnapsackProblemSolverFPTAS extends KnapsackProblemSolverDynamic imp
     private int itemsNumber;
     private int shift;
 
-    KnapsackProblemSolverFPTAS(String epsilon) {
-        this.epsilon = Double.parseDouble(epsilon);
+    KnapsackProblemSolverFPTAS(Map<String,String> parameters) {
+        this.epsilon = Double.parseDouble(parameters.get(Constant.EPSILON));
     }
 
 
